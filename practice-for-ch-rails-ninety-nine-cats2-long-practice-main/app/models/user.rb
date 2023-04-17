@@ -2,6 +2,11 @@ class User < ApplicationRecord
     validates :username, :session_token, presence: true, uniqueness: true
     validates :password_digest, presence: true
 
+    has_many :cats,
+    foreign_key: :owner_id, inverse_of: :owner,
+    class_name: :User
+
+
     before_validation :ensure_session_token
     attr_reader :password
 

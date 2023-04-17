@@ -32,6 +32,15 @@
         </option>
       <% end %>
   </select>
+
+  <br>
+
+  <label for="cat_owner_id">Owner_id</label>
+  <input
+    name="cat[owner_id]"
+    type="hidden"
+    value="<%= current_user.id %>"
+    >
   <br>
 
   <input
