@@ -1,5 +1,7 @@
 class CatRentalRequestsController < ApplicationController
   before_action :require_authorization, only: [:approve, :deny]
+  before_action :require_logged_in, only: [:edit, :update]
+
 
   def approve
     current_cat_rental_request.approve!
@@ -7,6 +9,7 @@ class CatRentalRequestsController < ApplicationController
   end
 
   def create
+
     @rental_request = CatRentalRequest.new(cat_rental_request_params)
     if @rental_request.save
       redirect_to cat_url(@rental_request.cat)
@@ -23,9 +26,9 @@ class CatRentalRequestsController < ApplicationController
 
   def new
     @rental_request = CatRentalRequest.new
-    # Grab the cat_id from params if it exists. 
+    # Grab the cat_id from params if it exists.
     # If it doesn't exist, :cat_id will still be nil.
-    @rental_request.cat_id = params[:cat_id] 
+    @rental_request.cat_id = params[:cat_id]
   end
 
   private
@@ -45,6 +48,6 @@ class CatRentalRequestsController < ApplicationController
   end
 
   def cat_rental_request_params
-    params.require(:cat_rental_request).permit(:cat_id, :end_date, :start_date, :status)
+    params.require(:cat_rental_request).permit(:cat_id, :requester_id, :end_date, :start_date, :status)
   end
 end

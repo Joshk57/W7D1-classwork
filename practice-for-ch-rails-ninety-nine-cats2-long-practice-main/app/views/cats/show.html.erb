@@ -38,6 +38,7 @@
       </tr>
       <% @cat.rental_requests.order('start_date').each do |req| %>
         <%= render 'req_tr', req: req %>
+        <td><%= req.user.username %></td>
       <% end %>
     </table>
   <% end %>

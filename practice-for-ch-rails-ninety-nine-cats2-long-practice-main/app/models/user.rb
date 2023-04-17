@@ -6,6 +6,11 @@ class User < ApplicationRecord
     foreign_key: :owner_id, inverse_of: :owner,
     class_name: :User
 
+    has_many :requests,
+    foreign_key: :requester_id, inverse_of :requester,
+    class_name: :CatRentalRequest,
+    dependent: :destroy
+
 
     before_validation :ensure_session_token
     attr_reader :password
