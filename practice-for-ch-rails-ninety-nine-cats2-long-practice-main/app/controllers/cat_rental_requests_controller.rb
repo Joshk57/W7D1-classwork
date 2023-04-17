@@ -1,4 +1,6 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :require_authorization, only: [:approve, :deny]
+
   def approve
     current_cat_rental_request.approve!
     redirect_to cat_url(current_cat)
@@ -27,6 +29,11 @@ class CatRentalRequestsController < ApplicationController
   end
 
   private
+
+  def require_authorization
+    @current_cat_rental_request = current_cat.users.find_by(id: params[:id])
+    redirect_to cat_url unless current_cat
+  end
 
   def current_cat_rental_request
     @rental_request ||=
